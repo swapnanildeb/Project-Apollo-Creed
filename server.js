@@ -15,8 +15,8 @@ app.use(bodyParser.text());
 console.log("server starting");
 app.post('/',function(req,res){
 	//console.log("post recieved");
-	processRequest(req.body.name,req.body.block,req.body.punch, req.body.sync);
 	res.send("meh");
+	processRequest(req.body.name,req.body.block,req.body.punch, req.body.sync);
 });
 app.set('view engine','jade');
 app.use(express.static('static'));
@@ -30,10 +30,12 @@ app.get('/',function(req,res){
 
 var health1 = 1000;
 var health2 = 1000;
+var gover = false;
 
 var reset = function(){
 	health1 = 1000;
 	health2 = 1000;
+	gover = false;
 }
 
 app.get('/reset',function(req,res){
@@ -76,12 +78,18 @@ var bool = function bool (x){
 
 var processRequest = function processRequest (name,block,punch,sync){
 var p = name.split(".")[0];
-
-	/*if(health2<0)
+	if(gover)
+		return;
+	if(health2<0){
 		console.log("Player 1 Wins!!!");
-	if(health1<0)
-		console.log("Player 2 Wins!!!")
-	*/
+		gover = true;
+		return;
+	}
+	if(health1<0){
+		console.log("Player 2 Wins!!!");
+		gover = true;
+		return;
+	}
 	//if(!bool(sync))
 		//console.log("unsynced ",name);
 	if(name=="1.left"){
