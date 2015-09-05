@@ -1,0 +1,67 @@
+html
+	head
+		title Sparring Partner
+
+		link(rel='stylesheet',href='/styles.css')
+		link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css", rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous")
+		link(rel='stylesheet',href='http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css')
+	body
+		.container
+			h2 Player 1 Health
+			.progress
+				.progress-bar.progress-bar-striped.progress-bar-success.play1(role="progressbar" style="width: 100%")
+			h2 Player 2 Health
+			.progress
+				.progress-bar.progress-bar-striped.progress-bar-success.play2(role="progressbar" style="width: 100%")
+		button.reset  Reset the Score
+		script(src='https://code.jquery.com/jquery-2.1.4.min.js')
+		script(src='http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js')
+		script(type='text/javascript').
+			var rhost = "/reset";
+			toastr.options = {
+				"closeButton": false,
+				"debug": false,
+				"newestOnTop": false,
+				"progressBar": false,
+				"positionClass": "toast-top-center",
+				"preventDuplicates": true,
+				"onclick": null,
+				"showDuration": "300",
+				"hideDuration": "1500",
+				"timeOut": "5000",
+				"extendedTimeOut": "1000",
+				"showEasing": "swing",
+				"hideEasing": "linear",
+				"showMethod": "fadeIn",
+				"hideMethod": "fadeOut"
+			}
+			var gover = false;
+			$(".reset").click(function(){
+				$.get(rhost,function(){
+				console.log("reset sent");
+				gover = false;
+				toastr.info("Health Reset");
+				})
+			});
+			var host = "/status";
+
+			var updateHealth = function(){
+				$.getJSON(host,function(data){
+					if(!gover){
+						if(data.health1<0){
+							gover = true;
+							toastr.info("Player 2 Won!!!");
+						}
+						if(data.health2<0){
+							gover = true;
+							toastr.info("Player 1 Won!!!");
+						}
+					}
+					var h1 = String(data.health1/10)+"%";
+					//console.log(h1);
+					var h2 = String(data.health2/10)+"%";
+					$(".play1").css("width",h1);
+					$(".play2").css("width",h2);
+					});
+			}
+			setInterval(updateHealth,0);
