@@ -79,23 +79,32 @@ Myo.on('imu',function(data){
 	//if(pitch>1)
 	//	console.log("hey look im blocking");
 	var minpitch = .8;
+	
 	//console.log(this.name,pitch);
-	if(this.name=="1.right"&&pitch>minpitch)
-		p1right = true;
-	else
-		p1right = false;
-	if(this.name=="1.left"&&pitch>minpitch)
-		p1left = true;
-	else
-		p1left = false;
-	if(this.name=="2.right"&&pitch>minpitch)
-		p2right = true;
-	else
-		p2right = false;
-	if(this.name=="2.left"&&pitch>minpitch)
-		p2left = true;
-	else
-		p2left = false;
-		//you are blocking
+	if(this.name=="1.right"){
+		if(pitch>minpitch)
+			p1right = true;
+		else
+			p1right = false;
+	}
+	if(this.name=="1.left"){
+		if(pitch>minpitch)
+			p1left = true;
+		else
+			p1left = false;
+	}
+	if(this.name=="2.right"){
+		if(pitch>minpitch)
+			p2right = true;
+		else
+			p2right = false;
+	}
+	if(this.name=="2.left"){
+		if(pitch>minpitch)
+			p2left = true;
+		else
+			p2left = false;
+			//you are 
+	}
 
 })
