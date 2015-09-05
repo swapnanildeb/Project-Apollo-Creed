@@ -23,7 +23,7 @@ app.use(express.static('static'));
 
 app.get('/',function(req,res){
 	console.log('get jade');
-	res.render('index');
+	//res.render('index');
 });
 
 
