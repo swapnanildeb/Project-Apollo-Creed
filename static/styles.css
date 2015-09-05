@@ -1,4 +1,13 @@
-h2{
-	font-size:10vh;
+.container h2{
+	font-size:5vh;
 	display:block;
+}
+.container .progress{
+	height:7vh;
+}
+.reset{
+	font-size:3vh;
+	width:16%;
+	display:block;
+	margin:auto;
 }
