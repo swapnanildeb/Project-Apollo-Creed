@@ -23,7 +23,7 @@ app.use(express.static('static'));
 
 app.get('/',function(req,res){
 	console.log('get jade');
-	//res.render('index');
+	res.render('index');
 });
 
 
@@ -62,7 +62,7 @@ app.get('/status',function(req,res){
 	 +'"}';
 	res.send(jsn);
 })
-app.listen(80);
+app.set('port', process.env.PORT || 80);
 
 
 var bool = function bool (x){
