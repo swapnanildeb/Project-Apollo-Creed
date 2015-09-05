@@ -44,8 +44,20 @@ var p1right = false;
 var p2left = false;
 var p2right = false;
 
+var sync1r = false;
+var sync1l = false;
+var sync2r = false;
+var sync2l = false;
+
 app.get('/status',function(req,res){
-	var jsn = '{"health1":"'+ String(health1) + '","health2":"'+String(health2)+'"}';
+	var jsn = '{'
+	+'"health1":"'+ String(health1)
+	+ '","health2":"'+String(health2)
+	+ '","sync1r":"'+String(sync1r)
+	+ '","sync1l":"'+String(sync1l)
+	+ '","sync2r":"'+String(sync2r)
+	+ '","sync2l":"'+String(sync2l)
+	 +'"}';
 	res.send(jsn);
 })
 app.listen(80);
@@ -57,21 +69,19 @@ var bool = function(x){
 	return false;
 }
 
-var sync1r = false;
-var sync1l = false;
-var sync2r = false;
-var sync2l = false;
+
 
 
 var processRequest = function(name,block,punch,sync){
 var p = name.split(".")[0];
 
-	if(health2<0)
+	/*if(health2<0)
 		console.log("Player 1 Wins!!!");
 	if(health1<0)
 		console.log("Player 2 Wins!!!")
-	if(!bool(sync))
-		console.log("unsynced ",name);
+	*/
+	//if(!bool(sync))
+		//console.log("unsynced ",name);
 	if(name=="1.left"){
 		p1left = bool(block);
 		sync1l = bool(sync);
@@ -91,6 +101,8 @@ var p = name.split(".")[0];
 	}
 	if(punch>0&&sync1l&&sync1r&&sync2l&&sync2r){
 		//console.log(p1left,p1right,p2left,p2right);
+		punch = punch*3;
+		console.log(punch);
 		if(name=="1.right"&&p2left||name=="1.left"&&p2right||name=="2.right"&&p1left||name=="2.left"&&p1right){
 			punch = punch/10;//reduce punch by 90% if blocked
 			console.log("punch blocked");

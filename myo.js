@@ -25,8 +25,10 @@ Myo.on('imu',function(data){
 	//send request
 	//var host = "http://10.59.67.242/";
 	var block = pitch>minpitch;
-	
-	request.post(host).form({"name":this.name,"block":block,"punch":vec, "sync":this.synced});
+	var isready = false;
+	if(this.warmupState=="warm")
+		isready = true;
+	request.post(host).form({"name":this.name,"block":block,"punch":vec, "sync":this.synced&&isready});
 
 })
 

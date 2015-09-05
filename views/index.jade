@@ -27,8 +27,8 @@ html
 				"preventDuplicates": true,
 				"onclick": null,
 				"showDuration": "300",
-				"hideDuration": "1500",
-				"timeOut": "5000",
+				"hideDuration": "300",
+				"timeOut": "1000",
 				"extendedTimeOut": "1000",
 				"showEasing": "swing",
 				"hideEasing": "linear",
@@ -44,17 +44,23 @@ html
 				})
 			});
 			var host = "/status";
-
+			var bool = function(x){
+				if(x=="true")
+					return true;
+				return false;
+			}
 			var updateHealth = function(){
 				$.getJSON(host,function(data){
 					if(!gover){
 						if(data.health1<0){
 							gover = true;
 							toastr.info("Player 2 Won!!!");
+							alert("Player 2 Won!!!");
 						}
 						if(data.health2<0){
 							gover = true;
 							toastr.info("Player 1 Won!!!");
+							alert("Player 1 Won!!!");
 						}
 					}
 					var h1 = String(data.health1/10)+"%";
@@ -62,6 +68,8 @@ html
 					var h2 = String(data.health2/10)+"%";
 					$(".play1").css("width",h1);
 					$(".play2").css("width",h2);
+					if(!(bool(data.sync1r)&&bool(data.sync1l)&&bool(data.sync2l)&&bool(data.sync2r)))
+						toastr.warning("A Myo is Unsynced");
 					});
 			}
 			setInterval(updateHealth,0);
