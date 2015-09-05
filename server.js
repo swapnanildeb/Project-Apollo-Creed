@@ -21,6 +21,7 @@ app.set('view engine','jade');
 app.use(express.static('static'));
 
 app.get('/',function(req,res){
+	console.log('get jade');
 	res.render('index');
 });
 
@@ -63,7 +64,7 @@ app.get('/status',function(req,res){
 app.listen(80);
 
 
-var bool = function(x){
+var bool = function bool (x){
 	if(x=="true")
 		return true;
 	return false;
@@ -72,7 +73,7 @@ var bool = function(x){
 
 
 
-var processRequest = function(name,block,punch,sync){
+var processRequest = function processRequest (name,block,punch,sync){
 var p = name.split(".")[0];
 
 	/*if(health2<0)
